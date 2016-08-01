@@ -1,0 +1,127 @@
+<html>
+
+<head>
+    <title>Distance between parents cultural background</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.ie.css" />
+    <![endif]-->
+
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+        background: black;
+    }
+
+    #menu {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        width: 400px;
+        height: 60px;
+        background: transparent;
+        z-index: 10;
+    }
+
+    #menu a {
+        margin: 15px 10px 0 0;
+        float: right;
+        vertical-align: baseline;
+        width: 70px;
+        height: 23px;
+        padding: 10px;
+        text-align: center;
+        font: bold 11px "Helvetica", Arial;
+        line-height: normal;
+        color: #555;
+        border-radius: 4px;
+        border: 1px solid #777777;
+        background: #ffffff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #menu a.selected,
+    #menu a:hover {
+        color: #F84F40;
+    }
+
+    .cartodb-layer-selector-box,
+    .cartodb-searchbox,
+    .cartodb-share {
+        display: none !important;
+    }
+    </style>
+    <script>
+    var layer;
+
+
+    function init() {
+        var url = 'https://ruizhuj.carto.com/api/v2/viz/41fce498-55bb-11e6-be83-0e3ebc282e83/viz.json';
+        var visualizacion = cartodb.createVis("map", url)
+            .done(function(vis, layers) {
+                layer = layers[1];
+            });
+    }
+
+    function showLayer(layerToShow) {
+
+        //turn off all layers
+        layer.getSubLayers().forEach(function(i) {
+            i.hide()
+        });
+
+        switch (layerToShow.id) {
+            case "AllData":
+                layer.getSubLayer(0).show();
+                break;
+            case "lessthen2000":
+                layer.getSubLayer(1).show();
+                break;
+            case "2000_10000":
+                layer.getSubLayer(2).show();
+                break;
+            case "10000_20000":
+                layer.getSubLayer(3).show();
+                break;
+            case "largerthen20000":
+                layer.getSubLayer(4).show();
+                break;
+        }
+
+        return true;
+    }
+    </script>
+</head>
+
+<body onload="init()">
+    <div id='map'></div>
+    <div id='menu'>
+
+        <a href="#AllData" id="AllData" class="button AllData" onclick="showLayer(this);">All Data</a>
+        <a href="#lessthen2000" id="lessthen2000" class="button lessthen2000" onclick="showLayer(this);">Less than 2000km</a>
+        <a href="#lessthen2000" id="2000_10000" class="button 2000_10000" onclick="showLayer(this);">2000km to 10000km</a>
+        <a href="#10000_20000" id="10000_20000" class="button 10000_20000" onclick="showLayer(this)">10,000km to 20,000km</a>
+        <a href="#largerthen20000" id="largerthen20000" class="button largerthen20000" onclick="showLayer(this);">Larger than 20,000km</a>
+
+
+
+    </div>
+</body>
+
+</html>
+<!--special tanks White Cat -->
+<!--http://stackoverflow.com/questions/29353691/cartodb-multiple-layer-toggle-->
